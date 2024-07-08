@@ -10,6 +10,10 @@ services:
       - 8000:8000
     depends_on:
       - db
+    # Note that if your SECRET_KEY includes a dollar sign, $, then you need to add an additional dollar sign, $$.
+    environment:
+      - "DJANGO_SECRET_KEY=django-insecure-$$#^n#eeraq_q9ecmxk5$tiqb1e&batwx_39*3*)-tz4v9qeo0+"
+      - "DJANGO_DEBUG=True"
   
   db:
     image: postgres:16.3
