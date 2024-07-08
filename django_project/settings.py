@@ -161,9 +161,6 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
-# as to be defined because django-auth will send an email on registration
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
 #specific config for signup
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 
@@ -177,3 +174,15 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 
 ##########################################################################
+
+# as to be defined because django-auth will send an email on registration
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+DEFAULT_FROM_EMAIL = "ramamsess@gmail.com"
+
+EMAIL_HOST='sandbox.smtp.mailtrap.io'
+EMAIL_HOST_USER='0678d1a9d3eaee'
+EMAIL_HOST_PASSWORD='588ecc26584e35'
+EMAIL_PORT=2525
+EMAIL_USE_TLS=True
