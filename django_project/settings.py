@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from environs import Env
+import socket
 
 env = Env()
 env.read_env()
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "allauth",
     "allauth.account",
+    "debug_toolbar",
     # Local
     "accounts.apps.AccountsConfig", 
     "pages.apps.PagesConfig",
@@ -54,6 +56,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "django.middleware.cache.UpdateCacheMiddleware", # caching-per site start
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -62,6 +65,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "allauth.account.middleware.AccountMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "django.middleware.cache.FetchFromCacheMiddleware", # caching-per site end
 ]
 
 ROOT_URLCONF = "django_project.urls"
@@ -190,3 +195,12 @@ EMAIL_HOST_USER='0678d1a9d3eaee'
 EMAIL_HOST_PASSWORD='588ecc26584e35'
 EMAIL_PORT=2525
 EMAIL_USE_TLS=True
+
+# config for debug_toolbar that ensures that our INTERNAL_IPS matches that of our Docker host, INTERNAL_IPS = '127.0.0.1' without Docker
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
+
+# caching-per site additionnal config
+CACHE_MIDDLEWARE_ALIAS = "default"
+CACHE_MIDDLEWARE_SECONDS = 604800
+CACHE_MIDDLEWARE_KEY_PREFIX = ""
