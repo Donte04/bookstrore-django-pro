@@ -22,7 +22,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     # Django admin
-    path("admin/", admin.site.urls),
+    path("anything-but-admin/", admin.site.urls),
     # User management
     # default login / logout auth
     # path("accounts/", include("django.contrib.auth.urls")),
